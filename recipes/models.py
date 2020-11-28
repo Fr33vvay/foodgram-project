@@ -4,42 +4,63 @@ from django.db import models
 User = get_user_model()
 
 
-class Unit(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=20,
-                            unique=True)
+# class Unit(models.Model):
+#     name = models.CharField(verbose_name='Название', max_length=20,
+#                             unique=True)
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Ingredient(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=200,
-                            unique=True)
-    amount = models.PositiveSmallIntegerField(verbose_name='Количество')
-    unit = models.ForeignKey(Unit, verbose_name='Единицы измерения',
-                             on_delete=models.SET_NULL)
+    title = models.CharField(max_length=200)
+    dimension = models.CharField(max_length=50)
 
-
-class Tag(models.TextChoices):
-    """
-    Теги для модели Recipe
-    """
-    BREAKFAST = 'breakfast', 'Завтрак'
-    LUNCH = 'lunch', 'Обед'
-    DINNER = 'dinner', 'Ужин'
+    def __str__(self):
+        return self.title
 
 
 class Recipe(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=200,
-                            unique=True)
+    class Tag(models.TextChoices):
+        """
+        Теги для модели Recipe
+        """
+        BREAKFAST = 'breakfast', 'Завтрак'
+        LUNCH = 'lunch', 'Обед'
+        DINNER = 'dinner', 'Ужин'
+
+    name = models.CharField(verbose_name='Название', max_length=200)
     author = models.ForeignKey(User, verbose_name='Автор',
                                related_name='recipes',
                                on_delete=models.CASCADE)
+    pub_date = models.DateTimeField("Дата публикации", auto_now_add=True,
+                                    db_index=True)
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='recipes/', blank=True, null=True)
-    ingredient = models.ManyToManyField(Ingredient, verbose_name='Ингредиенты',
-                                        related_name='ingredients')
+    ingredients = models.ManyToManyField(
+        Ingredient, through='Amount', through_fields=('recipe', 'ingredient')
+    )
     tag = models.CharField(choices=Tag.choices, default=Tag.BREAKFAST,
                            max_length=50, verbose_name='Тег')
-    cooktime = models.PositiveSmallIntegerField(verbose_name='Время готовки')
-    slug = models.SlugField(max_length=100, unique=True)
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время готовки')
+
+    class Meta:
+        ordering = ['-pub_date']
+
+    def __str__(self):
+        return self.name
+
+
+class Amount(models.Model):
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='recipe_amount'
+    )
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    quantity = models.FloatField()
+
+    def __str__(self):
+        return f'Из рецепта "{self.recipe}"'
 
 
 class Subscribe(models.Model):
