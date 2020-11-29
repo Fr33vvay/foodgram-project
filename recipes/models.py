@@ -5,8 +5,9 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
-    title = models.CharField(max_length=200)
-    dimension = models.CharField(max_length=50)
+    title = models.CharField(verbose_name='Название', max_length=200)
+    dimension = models.CharField(verbose_name='Единицы измерения',
+                                 max_length=50)
 
     def __str__(self):
         return self.title
@@ -33,7 +34,8 @@ class Recipe(models.Model):
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True,
                                     db_index=True)
     description = models.TextField(verbose_name='Описание')
-    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+    image = models.ImageField(verbose_name='Картинка', upload_to='recipes/',
+                              blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, through='Amount',
                                          related_name='amount')
     tag = models.CharField(choices=Tag.choices, default=Tag.BREAKFAST,
@@ -51,9 +53,8 @@ class Recipe(models.Model):
 
 
 class Amount(models.Model):
-    recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name='recipe_amount'
-    )
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='recipe_amount')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
                                    related_name='ingredients')
     quantity = models.FloatField()
