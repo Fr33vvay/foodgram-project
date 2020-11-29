@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Ingredient, Recipe, Subscribe
+from .models import Ingredient, Recipe, Subscribe, Amount
 
 
 @admin.register(Recipe)
@@ -19,12 +19,9 @@ class IngredientAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-# @admin.register(Unit)
-# class UnitAdmin(admin.ModelAdmin):
-#     list_display = ('name',)
-#     search_fields = ('name',)
-#     list_filter = ('name',)
-#     empty_value_display = '-пусто-'
+@admin.register(Amount)
+class AmountAdmin(admin.ModelAdmin):
+    list_display = ('recipe', 'ingredient', 'quantity')
 
 
 @admin.register(Subscribe)
