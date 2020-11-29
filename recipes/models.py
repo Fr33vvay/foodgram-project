@@ -37,9 +37,7 @@ class Recipe(models.Model):
                                     db_index=True)
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='recipes/', blank=True, null=True)
-    ingredients = models.ManyToManyField(
-        Ingredient, through='Amount', through_fields=('recipe', 'ingredient')
-    )
+    ingredients = models.ManyToManyField(Ingredient, through='Amount')
     tag = models.CharField(choices=Tag.choices, default=Tag.BREAKFAST,
                            max_length=50, verbose_name='Тег')
     cooking_time = models.PositiveSmallIntegerField(
@@ -56,7 +54,8 @@ class Amount(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='recipe_amount'
     )
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
+                                   related_name='ingredients')
     quantity = models.FloatField()
 
     def __str__(self):
