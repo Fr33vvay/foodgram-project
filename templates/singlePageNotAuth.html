@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Французские тосты</title>
-    <link rel="stylesheet" href="./pages/single.css">
+    <title>{{recipe.name}}</title>
+    <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 </head>
 <body class="body">
 <header class="header">
@@ -24,7 +25,7 @@
     </nav>
 </header>
     <main class="main container">
-        <div class="single-card" data-id="371">
+        <div class="single-card" data-id={{recipe.id}}
             <img src="./images/testCardImg.png" alt="какой-то текст" class="single-card__image">
             <div class="single-card__info">
                 <div class="single-card__header-info">
