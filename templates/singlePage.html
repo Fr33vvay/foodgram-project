@@ -31,7 +31,7 @@
     <main class="main container">
         <div class="single-card" data-id={{recipe.id}} data-author={{recipe.author.id}}>
             {% load thumbnail %}
-            {% thumbnail recipe.image "900х500" crop="center" as im %}
+            {% thumbnail recipe.image "900x500" crop="center" as im %}
             <img src="{{ im.url }}" alt="Картинка" class="single-card__image">
             {% endthumbnail %}
             <div class="single-card__info">
