@@ -10,9 +10,10 @@ class Ingredient(models.Model):
                                  max_length=50)
 
     def __str__(self):
-        return f'{self.title}, {self.dimension}'
+        return f'{self.title} ({self.dimension})'
 
     class Meta:
+        ordering = ['title']
         verbose_name = "Ингредиент"
         verbose_name_plural = "Ингредиенты"
 
@@ -57,7 +58,7 @@ class Amount(models.Model):
                                related_name='recipe_amount')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
                                    related_name='ingredients')
-    quantity = models.FloatField()
+    quantity = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return f'Из рецепта "{self.recipe}"'

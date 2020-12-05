@@ -3,8 +3,14 @@ from django.contrib import admin
 from .models import Ingredient, Recipe, Subscribe, Amount
 
 
+class IngredientInline(admin.TabularInline):
+    model = Recipe.ingredient.through
+    extra = 1
+
+
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
+    inlines = (IngredientInline,)
     list_display =('name', 'author','description', 'pub_date')
     search_fields = ('name', 'author', 'tag')
     list_filter = ('name',)
