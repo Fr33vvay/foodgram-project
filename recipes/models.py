@@ -10,7 +10,7 @@ class Ingredient(models.Model):
                                  max_length=50)
 
     def __str__(self):
-        return self.title
+        return f'{self.title}, {self.dimension}'
 
     class Meta:
         verbose_name = "Ингредиент"
