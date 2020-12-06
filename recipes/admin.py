@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Ingredient, Recipe, Subscribe, Amount
+from .models import Amount, Ingredient, Recipe, Subscribe
 
 
 class IngredientInline(admin.TabularInline):
@@ -11,7 +11,7 @@ class IngredientInline(admin.TabularInline):
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (IngredientInline,)
-    list_display =('name', 'author','description', 'pub_date')
+    list_display = ('name', 'author', 'description', 'pub_date')
     search_fields = ('name', 'author', 'tag')
     list_filter = ('name',)
     empty_value_display = '-пусто-'
@@ -36,6 +36,3 @@ class SubscribeAdmin(admin.ModelAdmin):
     search_fields = ('author',)
     list_filter = ('user', 'author',)
     empty_value_display = '-пусто-'
-
-
-
