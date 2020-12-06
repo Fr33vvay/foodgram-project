@@ -14,7 +14,7 @@
     <nav class="nav">
         <div class="nav__container container">
             <ul class="nav__items list">
-                <li class="nav__item nav__item_active"><a href="#" class="nav__link link">Рецепты</a></li>
+                <li class="nav__item nav__item_active"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
                 <li class="nav__item"><a href="#" class="nav__link link">Мои подписки</a></li>
                 <li class="nav__item"><a href="#" class="nav__link link">Создать рецепт</a></li>
                 <li class="nav__item"><a href="#" class="nav__link link">Избранное</a></li>
@@ -23,7 +23,7 @@
             </ul>
             <ul class="nav__items list">
                 <li class="nav__item"><a href="#" class="nav__link link">Изменить пароль</a></li>
-                <li class="nav__item"><a href="#" class="nav__link link">Выход</a></li>
+                <li class="nav__item"><a href="{% url 'logout' %}" class="nav__link link">Выход</a></li>
             </ul>
         </div>
     </nav>
@@ -50,7 +50,7 @@
                 <div class="single-card__items single-card__items_column">
                     <p class="single-card__text"><span class="icon-time"></span> {{recipe.cooking_time}} мин.</p>
                     <ul class="single-card__items">
-                        <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span> {{recipe.author}} </p></li>
+                        <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span> <a href="{% url 'profile' recipe.author %}" style="color: black">{{recipe.author}}</a> </p></li>
                         <li class="single-card__item">  <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
                     </ul>
                 </div>
@@ -76,7 +76,7 @@
     </main>
     <footer class="footer">
         <div class="footer__container container">
-            <a href="#" class="footer__brand link">Продуктовый помощник</a>
+            <a href="{% url 'index' %}" class="footer__brand link">Продуктовый помощник</a>
             <ul class="footer__items">
                 <li class="footer__item"><a href="#" class="footer__link link">Об авторе </a></li>
                 <li class="footer__item"><a href="#" class="footer__link link">Технологии</a></li>

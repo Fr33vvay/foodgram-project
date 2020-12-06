@@ -8,5 +8,3 @@ class CreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('first_name','username', 'email')
-        help_texts = {'username': 'Используйте латинские буквы. Вместо пробела'
-                                  ' используйте нижнее подчеркивание.'}
