@@ -10,14 +10,13 @@ def index(request):
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    template_name = (
-        'indexAuth.html' if request.user.is_authenticated
-        else 'indexNotAuth.html')
+    template_name = ('indexAuth.html')
     return render(request, template_name, {'page': page,
                                            'paginator': paginator})
 
 
 def profile(request, username):
+    """Показывает страницу автора рецепта"""
     author = get_object_or_404(User, username=username)
     recipe_list = author.recipes.order_by('-pub_date')
     paginator = Paginator(recipe_list, 6)
