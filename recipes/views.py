@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Recipe, User
+from recipes.models import Recipe, User
+from recipes.forms import RecipeForm
 
 
 def index(request):
@@ -35,3 +37,18 @@ def recipe_view(request, username, recipe_id):
         else 'singlePageNotAuth.html')
     return render(request, template_name, {'author': author,
                                            'recipe': recipe})
+
+
+@login_required
+def new_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST or None, files=request.FILES or None)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+            return redirect('index')
+        else:
+            render(request, 'formRecipe.html', {'form': form})
+    form = RecipeForm()
+    return render(request, 'formRecipe.html', {'form': form})
