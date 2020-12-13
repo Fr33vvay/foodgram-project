@@ -41,27 +41,29 @@ def recipe_view(request, recipe_id):
 
 @login_required
 def new_recipe(request):
-    user = get_object_or_404(User, username=request.user)
-    form = RecipeForm(request.POST or None, files=request.FILES or None)
+
 
     if request.method == 'POST':
-        ingredients = get_ingredients(request)
+        form = RecipeForm(request.POST or None, files=request.FILES or None)
+        ingredients = get_ingredients(request.POST)
         if not ingredients:
             form.add_error(None, 'Добавьте ингредиенты')
 
         if form.is_valid():
+            print('valid')
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
-            for ing_name, quantity in ingredients.items():
-                ingredient = get_object_or_404(Ingredient, title=ing_name)
-                recipe_ing = Amount(recipe=recipe,
-                                    ingredient=ingredient,
-                                    quantity=quantity)
+
+            for item in ingredients:
+                recipe_ing = Amount(
+                    quantity=item.get('quantity'),
+                    ingredient=Ingredient.objects.get(title=item.get('title')),
+                    recipe=recipe)
                 recipe_ing.save()
             form.save_m2m()
             return redirect('index')
         else:
-            render(request, 'formRecipe.html', {'form': form})
+            print('not valid')
     form = RecipeForm()
     return render(request, 'formRecipe.html', {'form': form})

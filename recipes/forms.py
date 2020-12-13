@@ -8,8 +8,6 @@ class RecipeForm(ModelForm):
         model = Recipe
         fields = (
             'name',
-            'tag',
-            'ingredient',
             'cooking_time',
             'description',
             'image'
