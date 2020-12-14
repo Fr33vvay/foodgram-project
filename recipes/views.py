@@ -13,7 +13,7 @@ def index(request):
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    template_name = ('indexAuth.html')
+    template_name = 'index.html'
     context = {'page': page, 'paginator': paginator}
     return render(request, template_name, context)
 
@@ -41,8 +41,6 @@ def recipe_view(request, recipe_id):
 
 @login_required
 def new_recipe(request):
-
-
     if request.method == 'POST':
         form = RecipeForm(request.POST or None, files=request.FILES or None)
         ingredients = get_ingredients(request.POST)
@@ -63,7 +61,5 @@ def new_recipe(request):
                 recipe_ing.save()
             form.save_m2m()
             return redirect('index')
-        else:
-            print('not valid')
     form = RecipeForm()
     return render(request, 'formRecipe.html', {'form': form})
