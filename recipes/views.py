@@ -48,7 +48,6 @@ def new_recipe(request):
             form.add_error(None, 'Добавьте ингредиенты')
 
         if form.is_valid():
-            print('valid')
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
@@ -63,3 +62,33 @@ def new_recipe(request):
             return redirect('index')
     form = RecipeForm()
     return render(request, 'formRecipe.html', {'form': form})
+
+
+@login_required
+def recipe_edit(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    ing = Amount.objects.filter(recipe=recipe_id)
+    form = RecipeForm(request.POST or None, files=request.FILES or None,
+                      instance=recipe)
+    context = {'form': form, 'recipe': recipe, 'edit': True, 'ingredients': ing}
+    if recipe.author == request.user:
+        if request.method == 'POST':
+            ingredients = get_ingredients(request.POST)
+            if form.is_valid():
+                ing.delete()
+                recipe = form.save(commit=False)
+                recipe.author = request.user
+                recipe.save()
+
+                for item in ingredients:
+                    recipe_ing = Amount(
+                        quantity=item.get('quantity'),
+                        ingredient=Ingredient.objects.get(
+                            title=item.get('title')),
+                        recipe=recipe)
+                    recipe_ing.save()
+                form.save_m2m()
+                return redirect('recipe_view', recipe_id)
+        return render(request, 'formChangeRecipe.html', context)
+    else:
+        return redirect('recipe_view', recipe_id)

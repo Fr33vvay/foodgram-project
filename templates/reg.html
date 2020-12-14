@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+{% load recipe_filters %}
 {% load static %}
 <head>
     <meta charset="UTF-8">
@@ -19,24 +20,21 @@
     </div>
     <div class="form-container">
         <form class="form" method="post" action="{% url 'signup' %}">
-            {% csrf_token %}
+                {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form__group">
+                        <label for="{{ field.id_for_label }}" class="form__label">{{ field.label }}</label>
+                                <div class="form__field-group">
+                                    {{ field|addclass:"form__input" }}
+                                    {% if form.errors %}
+                                        {% for error in field.errors %}
+                                            <span class="form__error">{{ error|escape }}</span>
+                                        {% endfor %}
+                                     {% endif %}
 
-            {% for field in form %}
-            <div class="form__group">
-                <label for="{{ field.id_for_label }}"
-                       class="form__label">{{ field.label }}
-                            {% if field.field.required %}<span>*</span>{% endif %}</label>
-                <div class="form__field-group">
-                    <input type="{{ field.widget_type }}"
-                           name="{{ field.html_name }}"
-                           id="{{ field.id_for_label }}"
-                           value="{% if field.widget_type != 'password' %}{{ field.value|default_if_none:'' }}{% endif %}"
-                           class="form__input"
-                           {% if field.field.required %}required{% endif %}>
-                    <span class="form__error">{{ field.errors }}</span>
-                </div>
-            </div>
-            {% endfor %}
+                                </div>
+                        </div>
+                    {% endfor %}
             <div class="form__footer">
                 <button class="button button_style_blue">Создать аккаунт</button>
             </div>

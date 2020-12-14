@@ -38,7 +38,7 @@
                         <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span> <a href="{% url 'profile' recipe.author %}" style="color: black">{{recipe.author}}</a> </p></li>
 
                         {% if author == user %}
-                            <li class="single-card__item">  <a style="margin-left: 2.5em" href="#" class="single-card__text">Редактировать рецепт</a></li>
+                            <li class="single-card__item">  <a style="margin-left: 2.5em" href="{% url 'recipe_edit' recipe.id %}" class="single-card__text">Редактировать рецепт</a></li>
                         {% endif %}
 
                     </ul>
@@ -77,5 +77,6 @@
 
 <script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'singlePage.js' %}"></script>
+
 </body>
 </html>

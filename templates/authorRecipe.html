@@ -11,52 +11,52 @@
 </head>
 <body class="body">
 
-    {% include "nav.html" %}
+{% include "nav.html" %}
 
-    <main class="main container">
-        <div class="main__header">
-            <h1 class="main__title">{{ author.get_full_name }}</h1>
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">{{ author.get_full_name }}</h1>
 
-            {% include "tags.html" %}
-
-        </div>
-<!--        <p style="padding: 0 0 2em 0;"><a class="button button_style_light-blue" href="#">Подписаться на автора</a></p>-->
-        <div class="author-subscribe" data-author="323">
-            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
-        </div>
-        <div class="card-list" >
-            {% load thumbnail %}
-            {% for recipe in page %}
-            {% thumbnail recipe.image "900x500" crop="center" as im %}
-            <div class="card" data-id="{{ recipe.id }}">
-                <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="Картинка" class="card__image"></a>
-                {% endthumbnail %}
-                <div class="card__body">
-                    <a class="card__title link" href="{% url 'recipe_view' recipe.id %}" target="_blank">{{recipe.name}}</a>
-                    <ul class="card__items">
-                        <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
-                        <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
-                        <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
-                    </ul>
-                    <div class="card__items card__items_column">
-                        <p class="card__text"><span class="icon-time"></span> {{recipe.cooking_time}} мин.</p>
-                        <p class="card__text"><span class="icon-user"></span> {{recipe.author}}</p>
-                    </div>
-                </div>
-                <div class="card__footer">
-                    <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
-                    <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
-                </div>
-            </div>
-            {% endfor %}
+        {% include "tags.html" %}
 
     </div>
-        {% if page.has_other_pages %}
-            {% include "paginator.html" with items=page paginator=paginator%}
-        {% endif %}
-    </main>
+<!--        <p style="padding: 0 0 2em 0;"><a class="button button_style_light-blue" href="#">Подписаться на автора</a></p>-->
+    <div class="author-subscribe" data-author="323">
+        <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
+    </div>
+    <div class="card-list" >
+        {% load thumbnail %}
+        {% for recipe in page %}
+        {% thumbnail recipe.image "900x500" crop="center" as im %}
+        <div class="card" data-id="{{ recipe.id }}">
+            <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="Картинка" class="card__image"></a>
+            {% endthumbnail %}
+            <div class="card__body">
+                <a class="card__title link" href="{% url 'recipe_view' recipe.id %}" target="_blank">{{recipe.name}}</a>
+                <ul class="card__items">
+                    <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
+                    <li class="card__item"><span class="badge badge_style_orange">Завтрак</span></li>
+                    <li class="card__item"><span class="badge badge_style_purple">Ужин</span></li>
+                </ul>
+                <div class="card__items card__items_column">
+                    <p class="card__text"><span class="icon-time"></span> {{recipe.cooking_time}} мин.</p>
+                    <p class="card__text"><span class="icon-user"></span> {{recipe.author}}</p>
+                </div>
+            </div>
+            <div class="card__footer">
+                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+                <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
+            </div>
+        </div>
+        {% endfor %}
 
-    {% include "footer.html" %}
+</div>
+    {% if page.has_other_pages %}
+        {% include "paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+</main>
+
+{% include "footer.html" %}
 
 <script src="{% static 'js/components/MainCards.js' %}"></script>
 
