@@ -5,6 +5,7 @@ from recipes.models import Ingredient
 
 
 class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """Возвращает json ингредиентов"""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     filter_backends = [filters.SearchFilter, ]
