@@ -30,6 +30,7 @@ def profile(request, username):
 
 
 def recipe_view(request, recipe_id):
+    """Показывает страницу рецепта"""
     recipe = get_object_or_404(Recipe, id=recipe_id)
     author = get_object_or_404(User, username=recipe.author)
     context = {'recipe': recipe, 'author': author}
@@ -41,6 +42,7 @@ def recipe_view(request, recipe_id):
 
 @login_required
 def new_recipe(request):
+    """Создаёт новый рецепт"""
     if request.method == 'POST':
         form = RecipeForm(request.POST or None, files=request.FILES or None)
         ingredients = get_ingredients(request.POST)
@@ -51,7 +53,6 @@ def new_recipe(request):
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
-
             for item in ingredients:
                 recipe_ing = Amount(
                     quantity=item.get('quantity'),
@@ -60,26 +61,30 @@ def new_recipe(request):
                 recipe_ing.save()
             form.save_m2m()
             return redirect('index')
+
     form = RecipeForm()
     return render(request, 'formRecipe.html', {'form': form})
 
 
 @login_required
 def recipe_edit(request, recipe_id):
+    """Изменяет рецепт"""
     recipe = get_object_or_404(Recipe, id=recipe_id)
     ing = Amount.objects.filter(recipe=recipe_id)
     form = RecipeForm(request.POST or None, files=request.FILES or None,
                       instance=recipe)
-    context = {'form': form, 'recipe': recipe, 'edit': True, 'ingredients': ing}
+    context = {'form': form, 'recipe': recipe, 'edit': True,
+               'ingredients': ing}
+
     if recipe.author == request.user:
         if request.method == 'POST':
             ingredients = get_ingredients(request.POST)
+
             if form.is_valid():
                 ing.delete()
                 recipe = form.save(commit=False)
                 recipe.author = request.user
                 recipe.save()
-
                 for item in ingredients:
                     recipe_ing = Amount(
                         quantity=item.get('quantity'),
@@ -89,6 +94,18 @@ def recipe_edit(request, recipe_id):
                     recipe_ing.save()
                 form.save_m2m()
                 return redirect('recipe_view', recipe_id)
+
         return render(request, 'formChangeRecipe.html', context)
     else:
         return redirect('recipe_view', recipe_id)
+
+
+@login_required
+def recipe_delete(request, recipe_id):
+    """Удаляет рецепт"""
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    if recipe.author == request.user:
+        if request.method == 'GET':
+            recipe.delete()
+            return render(request, 'recipe_delete.html')
+    return redirect('recipe_view', recipe_id)
