@@ -10,7 +10,7 @@ def get_ingredients(data):
             {
                 'title': data[f'nameIngredient_{number}'],
                 'dimension': data[f'unitsIngredient_{number}'],
-                'quantity': int(data[f'valueIngredient_{number}']),
+                'quantity': float(data[f'valueIngredient_{number}']),
             }
         )
     return ingredients
