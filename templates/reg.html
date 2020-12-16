@@ -1,20 +1,11 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
 {% load recipe_filters %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Регистрация</title>
+{% block title %}Регистрация{% endblock title %}
+{% block static %}
     <link rel="stylesheet" href="{% static 'pages/form.css' %}">
-</head>
-<body class="body">
-
-{% include "nav.html" %}
-
-<main class="main container">
+{% endblock static %}
+{% block content %}
     <div class="main__header">
         <h1 class="main__title">Регистрация</h1>
     </div>
@@ -40,11 +31,4 @@
             </div>
         </form>
     </div>
-
-
-</main>
-
-{% include "footer.html" %}
-
-</body>
-</html>
+{% endblock content %}
