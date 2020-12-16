@@ -13,9 +13,8 @@ def index(request):
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    template_name = 'index.html'
     context = {'page': page, 'paginator': paginator}
-    return render(request, template_name, context)
+    return render(request, 'index.html', context)
 
 
 def profile(request, username):
@@ -113,12 +112,12 @@ def recipe_delete(request, recipe_id):
 
 @login_required
 def subscribe(request):
+    """Предоставляет список подписок пользователя"""
     user = request.user
-    authors = Subscribe.author.filter(user=user)
-    paginator = Paginator(authors, 6)
+    subscriptions = Subscribe.objects.filter(user=user)
+    paginator = Paginator(subscriptions, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    template_name = 'myFollow.html'
-    context = {'page': page, 'paginator': paginator, 'authors': authors}
-    return render(request, template_name, context)
+    context = {'page': page, 'paginator': paginator, 'subscriptions': subscriptions}
+    return render(request, 'myFollow.html', context)
 

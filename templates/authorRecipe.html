@@ -5,6 +5,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock static %}
+
 {% block content %}
     <div class="main__header">
         <h1 class="main__title">{{ author.get_full_name }}</h1>
@@ -43,12 +44,14 @@
         {% endfor %}
 
 </div>
+
     {% if page.has_other_pages %}
         {% include "paginator.html" with items=page paginator=paginator%}
     {% endif %}
+
 {% endblock content %}
 {% block script %}
-    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/config/config.js' %}"></script>
 
     <script src="{% static 'js/components/Purchases.js' %}"></script>
     <script src="{% static 'js/components/Favorites.js' %}"></script>

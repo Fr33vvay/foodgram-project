@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load recipe_filters %}
 {% load static %}
+
 {% block title %}Создание рецепта{% endblock title %}
+
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/form.css' %}">
-{% endblock %}
+{% endblock static%}
+
 {% block content %}
     <div class="main__header">
         <h1 class="main__title">Создание рецепта</h1>
@@ -101,6 +104,7 @@
         </form>
     </div>
 {% endblock content %}
+
 {% block script %}
     <script src="{% static 'js/config/config.js' %}"></script>
     <script src="{% static 'js/components/Header.js' %}"></script>
