@@ -11,4 +11,5 @@ urlpatterns = [
     path('recipe/<int:recipe_id>/delete/', views.recipe_delete,
          name='recipe_delete'),
     path('<username>/', views.profile, name='profile'),
+    path('<username>/sub', views.subscribe, name='subscribe')
 ]

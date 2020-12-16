@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 
-from recipes.models import Recipe, User, Ingredient, Amount
+from recipes.models import Recipe, User, Ingredient, Amount, Subscribe
 from recipes.forms import RecipeForm
 from recipes.utils import get_ingredients
 
@@ -109,3 +109,16 @@ def recipe_delete(request, recipe_id):
             recipe.delete()
             return render(request, 'recipe_delete.html')
     return redirect('recipe_view', recipe_id)
+
+
+@login_required
+def subscribe(request):
+    user = request.user
+    authors = Subscribe.author.filter(user=user)
+    paginator = Paginator(authors, 6)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    template_name = 'myFollow.html'
+    context = {'page': page, 'paginator': paginator, 'authors': authors}
+    return render(request, template_name, context)
+
