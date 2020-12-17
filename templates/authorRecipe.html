@@ -11,12 +11,18 @@
         <h1 class="main__title">{{ author.get_full_name }}</h1>
 
         {% include "tags.html" %}
-
     </div>
-<!--        <p style="padding: 0 0 2em 0;"><a class="button button_style_light-blue" href="#">Подписаться на автора</a></p>-->
-    <div class="author-subscribe" data-author="323">
-        <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
-    </div>
+    {% if user != author %}
+        {% if user.is_authenticated %}
+        <div class="author-subscribe" data-author="{{ author.id }}">
+        {% if subscription %}
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe"><span class="icon-check button__icon"></span> Отписаться от автора </button></p>
+        {% else %}
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
+        {% endif %}
+        {% endif %}
+        </div>
+    {% endif %}
     <div class="card-list" >
         {% load thumbnail %}
         {% for recipe in page %}
@@ -50,8 +56,9 @@
     {% endif %}
 
 {% endblock content %}
+
 {% block script %}
-    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
 
     <script src="{% static 'js/components/Purchases.js' %}"></script>
     <script src="{% static 'js/components/Favorites.js' %}"></script>

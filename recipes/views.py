@@ -19,12 +19,20 @@ def index(request):
 
 def profile(request, username):
     """Показывает страницу автора рецепта"""
+    user = request.user
     author = get_object_or_404(User, username=username)
+    subscription = Subscribe.objects.filter(user=user, author=author).exists()
     recipe_list = author.recipes.order_by('-pub_date')
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    context = {'author': author, 'page': page, 'paginator': paginator}
+    context = {
+        'user': user,
+        'author': author,
+        'subscription': subscription,
+        'page': page,
+        'paginator': paginator
+    }
     return render(request, 'authorRecipe.html', context)
 
 
@@ -32,7 +40,9 @@ def recipe_view(request, recipe_id):
     """Показывает страницу рецепта"""
     recipe = get_object_or_404(Recipe, id=recipe_id)
     author = get_object_or_404(User, username=recipe.author)
-    context = {'recipe': recipe, 'author': author}
+    user = request.user
+    subscriptions = Subscribe.objects.filter(user=user)
+    context = {'recipe': recipe, 'author': author, 'user': user, 'subscriptions': subscriptions}
     template_name = (
         'singlePage.html' if request.user.is_authenticated
         else 'singlePageNotAuth.html')
@@ -118,6 +128,6 @@ def subscribe(request):
     paginator = Paginator(subscriptions, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    context = {'page': page, 'paginator': paginator, 'subscriptions': subscriptions}
+    context = {'page': page, 'paginator': paginator,
+               'subscriptions': subscriptions}
     return render(request, 'myFollow.html', context)
-

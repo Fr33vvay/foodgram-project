@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import filters, mixins, viewsets, permissions
+from rest_framework import filters, mixins, viewsets, permissions, status
 from rest_framework.response import Response
 
 from api.serializers import IngredientSerializer, SubscribeSerializer
@@ -22,7 +22,14 @@ class SubscribeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """Создаёт подписку на автора"""
-        serializer.save(user=self.request.user)
+        author = get_object_or_404(User, pk=self.request.data.get('id'))
+        serializer = SubscribeSerializer(data=self.request.data, context={
+            'request_user': self.request.user,
+            'author': author
+        })
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user, author=author)
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
         """Удаляет подписку на автора"""

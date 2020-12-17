@@ -48,7 +48,7 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    return fetch(`/api/v1/subscriptions`, {
+    return fetch(`/api/v1/subscriptions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

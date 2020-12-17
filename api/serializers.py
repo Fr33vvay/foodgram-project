@@ -14,7 +14,7 @@ class SubscribeSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(
         default=serializers.CurrentUserDefault())
     author = serializers.SlugRelatedField(queryset=User.objects.all(),
-                                          slug_field='id', source='author')
+                                          slug_field='id')
 
     def validate(self, data):
         user = self.context['request'].user
