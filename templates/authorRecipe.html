@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Рецепты{% endblock %}
 {% load static %}
-
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock static %}
@@ -43,7 +42,7 @@
                 </div>
             </div>
             <div class="card__footer">
-                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить покупки</button>
                 <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
             </div>
         </div>

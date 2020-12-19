@@ -9,7 +9,7 @@
     {% block static %}{% endblock %}
 </head>
 <body class="body">
-
+{% csrf_token %}
 {% include "nav.html" %}
 
 <main class="main container">

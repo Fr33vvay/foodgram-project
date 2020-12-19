@@ -11,22 +11,17 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class SubscribeSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(
-        default=serializers.CurrentUserDefault())
-    author = serializers.SlugRelatedField(queryset=User.objects.all(),
-                                          slug_field='id')
+    user = serializers.StringRelatedField()
+    author = serializers.StringRelatedField()
 
     def validate(self, data):
-        user = self.context['request'].user
-        if user == data['author']:
-            raise serializers.ValidationError('Нельзя подписаться '
-                                              'на себя самого')
+        super().validate(data)
+        user = self.context.get('request_user')
+        author = self.context.get('author')
+        if Subscribe.objects.filter(user=user, author=author).exists():
+            raise serializers.ValidationError('Подписка уже существует')
         return data
 
     class Meta:
         fields = ('user', 'author')
         model = Subscribe
-        validators = [
-            UniqueTogetherValidator(queryset=Subscribe.objects.all(),
-                                    fields=('user', 'author'))
-        ]

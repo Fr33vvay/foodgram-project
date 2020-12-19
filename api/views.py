@@ -18,7 +18,7 @@ class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
 class SubscribeViewSet(viewsets.ModelViewSet):
     queryset = Subscribe.objects.all()
     serializer_class = SubscribeSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         """Создаёт подписку на автора"""
