@@ -23,7 +23,10 @@ def profile(request, username):
     """Показывает страницу автора рецепта"""
     user = request.user
     author = get_object_or_404(User, username=username)
-    subscription = Subscribe.objects.filter(user=user, author=author).exists()
+    subscription = False
+    if user.is_authenticated:
+        subscription = Subscribe.objects.filter(user=user,
+                                                author=author).exists()
     recipe_list = author.recipes.order_by('-pub_date')
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
@@ -43,8 +46,12 @@ def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     author = get_object_or_404(User, username=recipe.author)
     user = request.user
-    subscription = Subscribe.objects.filter(user=user, author=author).exists()
-    context = {'recipe': recipe, 'author': author, 'user': user, 'subscription': subscription}
+    subscription = False
+    if user.is_authenticated:
+        subscription = Subscribe.objects.filter(user=user,
+                                                author=author).exists()
+    context = {'recipe': recipe, 'author': author, 'user': user,
+               'subscription': subscription}
     template_name = (
         'singlePage.html' if request.user.is_authenticated
         else 'singlePageNotAuth.html')
