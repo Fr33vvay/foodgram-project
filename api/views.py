@@ -18,18 +18,13 @@ class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
 class SubscribeViewSet(viewsets.ModelViewSet):
     queryset = Subscribe.objects.all()
     serializer_class = SubscribeSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         """Создаёт подписку на автора"""
         author = get_object_or_404(User, pk=self.request.data.get('id'))
-        serializer = SubscribeSerializer(data=self.request.data, context={
-            'request_user': self.request.user,
-            'author': author
-        })
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, author=author)
-        return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
         """Удаляет подписку на автора"""
