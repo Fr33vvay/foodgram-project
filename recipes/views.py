@@ -41,8 +41,8 @@ def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     author = get_object_or_404(User, username=recipe.author)
     user = request.user
-    subscriptions = Subscribe.objects.filter(user=user)
-    context = {'recipe': recipe, 'author': author, 'user': user, 'subscriptions': subscriptions}
+    subscription = Subscribe.objects.filter(user=user, author=author).exists()
+    context = {'recipe': recipe, 'author': author, 'user': user, 'subscription': subscription}
     template_name = (
         'singlePage.html' if request.user.is_authenticated
         else 'singlePageNotAuth.html')

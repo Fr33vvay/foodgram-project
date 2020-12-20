@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Рецепты{% endblock %}
 {% load static %}
+
+{% block title %}Рецепты{% endblock %}
+
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock static %}
@@ -15,7 +17,7 @@
         {% if user.is_authenticated %}
         <div class="author-subscribe" data-author="{{ author.id }}">
         {% if subscription %}
-            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe"><span class="icon-check button__icon"></span> Отписаться от автора </button></p>
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe"><span class="icon-check button__icon"></span>Отписаться от автора </button></p>
         {% else %}
             <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
         {% endif %}

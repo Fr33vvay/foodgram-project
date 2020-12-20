@@ -40,10 +40,12 @@
             <ul class="single-card__items">
                 <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
                 {% if user != author %}
+                    {% if user.is_authenticated %}
                     {% if subscription %}
-                        <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Отписаться</button></li>
+                        <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe"><span class="icon-check button__icon"></span>Отписаться от автора</button></li>
                     {% else %}
                         <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
+                    {% endif %}
                     {% endif %}
                 {% endif %}
             </ul>
@@ -69,7 +71,7 @@
     <script src="{% static 'js/config/config.js' %}"></script>
 
     <script src="{% static 'js/components/MainCards.js' %}"></script>
-    <script src="{% static 'js/components/SingleCards.js' %}"></script>
+    <script src="{% static 'js/components/SingleCard.js' %}"></script>
     <script src="{% static 'js/components/Header.js' %}"></script>
 
     <script src="{% static 'js/api/Api.js' %}"></script>
