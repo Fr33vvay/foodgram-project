@@ -129,5 +129,5 @@ def subscribe(request):
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator,
-               'subscriptions': subscriptions}
+               'subscriptions': subscriptions, 'user': user}
     return render(request, 'myFollow.html', context)

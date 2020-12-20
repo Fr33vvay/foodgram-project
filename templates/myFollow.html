@@ -21,12 +21,13 @@
         </div>
         <div class="card-user__body">
             {% load thumbnail %}
-            {% for recipe in subscription.author.recipes %}
+            {% for recipe in subscription.author.recipes.all %}
             <ul class="card-user__items">
                 <li class="card-user__item">
                     <div class="recipe">
                         {% thumbnail recipe.image "900x500" crop="center" as im %}
                         <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="Картинка" class="card__image"></a>
+                        {% endthumbnail %}
                         <h3 class="recipe__title">{{ recipe.name }}</h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                     </div>
