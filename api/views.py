@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import filters, mixins, viewsets, permissions, status
+from rest_framework import filters, mixins, viewsets, permissions
 from rest_framework.response import Response
 
 from api.serializers import IngredientSerializer, SubscribeSerializer
-from recipes.models import Ingredient, Subscribe, User
+from recipes.models import Ingredient, User
+from api.models import Subscribe
 
 
 class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -29,6 +30,7 @@ class SubscribeViewSet(viewsets.ModelViewSet):
         })
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, author=author)
+        return Response({'success': True})
 
     def destroy(self, request, *args, **kwargs):
         """Удаляет подписку на автора"""

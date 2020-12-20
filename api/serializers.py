@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.validators import UniqueTogetherValidator
 
-from recipes.models import Ingredient, Subscribe, User
+from recipes.models import Ingredient
+from api.models import Subscribe
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class SubscribeSerializer(serializers.ModelSerializer):
         """Запрещает подписаться на самого себя"""
         super().validate(data)
         user = self.context.get('request_user')
-        if user == data:
+        if user.id == data:
             raise ValidationError('Вы не можете подписаться на себя')
         return data
 

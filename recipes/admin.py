@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Amount, Ingredient, Recipe, Subscribe
+from recipes.models import Amount, Ingredient, Recipe
+from api.models import Subscribe
 
 
 class IngredientInline(admin.TabularInline):
