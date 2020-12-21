@@ -14,7 +14,7 @@
 
 {% csrf_token %}
 
-{% include "nav.html" %}
+{% block nav %}{% endblock %}
 
 <main class="main container">
     {% block content %}{% endblock content %}

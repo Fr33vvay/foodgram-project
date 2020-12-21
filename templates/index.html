@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% include "nav.html" %}
 {% block title %}Рецепты{% endblock title %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock static %}
+
+{% block nav %}
+    {% include "nav.html" with index=True %}
+{% endblock %}
+
 {% block content %}
     <div class="main__header">
         <h1 class="main__title">Рецепты</h1>

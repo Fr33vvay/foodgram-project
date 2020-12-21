@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}{{ recipe.name }}{% endblock title %}
+
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock static %}
+
+{% block nav %}
+    {% include "nav.html" %}
+{% endblock %}
+
 {% block content %}
     <div class="single-card" data-id={{recipe.id}}>
         {% load thumbnail %}

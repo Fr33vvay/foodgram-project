@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{% static 'pages/myFollow.css'%}">
 {% endblock static %}
 
+{% block nav %}
+    {% include "nav.html" with subscriptions=True %}
+{% endblock %}
+
 {% block content %}
 
     <div class="main__header">
@@ -21,7 +25,7 @@
         </div>
         <div class="card-user__body">
             {% load thumbnail %}
-            {% for recipe in subscription.author.recipes.all %}
+            {% for recipe in subscription.author.recipes.all|slice:":3" %}
             <ul class="card-user__items">
                 <li class="card-user__item">
                     <div class="recipe">
@@ -33,9 +37,11 @@
                     </div>
                 </li>
             {% endfor %}
+            {% if subscription.author.recipes.all.count > 3 %}
                 <li class="card-user__item">
-                    <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
+                    <a href="{% url 'profile' subscription.author %}" class="card-user__link link">Еще {{ subscription.author.recipes.all.count|add:-3 }} рецептов...</a>
                 </li>
+            {% endif %}
             </ul>
         </div>
         <div class="card-user__footer">

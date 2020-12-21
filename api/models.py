@@ -12,5 +12,6 @@ class Subscribe(models.Model):
                                related_name='subscriptions')
 
     class Meta:
+        ordering = ['-id']
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"

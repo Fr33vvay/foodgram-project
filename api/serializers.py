@@ -33,5 +33,5 @@ class SubscribeSerializer(serializers.ModelSerializer):
         return data
 
     class Meta:
-        fields = ('user', 'author')
+        fields = '__all__'
         model = Subscribe

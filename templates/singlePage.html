@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{% static 'pages/single.css' %}">
 {% endblock static %}
 
+{% block nav %}
+    {% include "nav.html" %}
+{% endblock %}
+
 {% block content %}
     <div class="single-card" data-id={{recipe.id}} data-author={{recipe.author.id}}>
         {% load thumbnail %}
