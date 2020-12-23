@@ -10,5 +10,5 @@ class RecipeForm(ModelForm):
             'name',
             'cooking_time',
             'description',
-            'image'
+            'image',
         )

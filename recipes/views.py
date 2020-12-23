@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 
 from api.models import Subscribe
-from recipes.models import Recipe, User, Ingredient, Amount
+from recipes.models import Recipe, User, Ingredient, Amount, Tag
 
 from recipes.forms import RecipeForm
 from recipes.utils import get_ingredients
@@ -12,6 +12,15 @@ from recipes.utils import get_ingredients
 def index(request):
     """Предоставляет список рецептов для всех пользователей"""
     recipe_list = Recipe.objects.all()
+    paginator = Paginator(recipe_list, 6)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator}
+    return render(request, 'index.html', context)
+
+
+def index_tag(request, tag):
+    recipe_list = Recipe.objects.filter(tag=tag)
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
