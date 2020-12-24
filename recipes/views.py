@@ -20,7 +20,7 @@ def index(request):
 
 
 def index_tag(request, tag):
-    recipe_list = Recipe.objects.filter(tag=tag)
+    recipe_list = Recipe.objects.filter(tag__title=tag)
     paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)

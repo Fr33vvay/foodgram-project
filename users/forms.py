@@ -12,3 +12,4 @@ class CreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('first_name','username', 'email')
+

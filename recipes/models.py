@@ -18,13 +18,24 @@ class Ingredient(models.Model):
         verbose_name_plural = "Ингредиенты"
 
 
-class Tag(models.TextChoices):
-    """
-    Теги для модели Recipe
-    """
-    BREAKFAST = 'breakfast', 'Завтрак'
-    LUNCH = 'lunch', 'Обед'
-    DINNER = 'dinner', 'Ужин'
+class Tag(models.Model):
+    TAG_CHOICES = [
+        ('breakfast', 'Завтрак'),
+        ('lunch', 'Обед'),
+        ('dinner', 'Ужин'),
+    ]
+    title = models.CharField(
+        max_length=30,
+        choices=TAG_CHOICES,
+        verbose_name='Название тега'
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
 
 class Recipe(models.Model):
@@ -39,8 +50,10 @@ class Recipe(models.Model):
                               blank=True, null=True)
     ingredient = models.ManyToManyField(Ingredient, through='Amount',
                                         related_name='amount')
-    tag = models.CharField(choices=Tag.choices, default=Tag.BREAKFAST,
-                           max_length=50, verbose_name='Тег')
+    tag = models.ManyToManyField(
+        Tag,
+        related_name='recipe_tag'
+    )
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время готовки')
 

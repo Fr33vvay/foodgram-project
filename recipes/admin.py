@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.db import models
+from django.forms import CheckboxSelectMultiple
 
-from recipes.models import Amount, Ingredient, Recipe
+from recipes.models import Amount, Ingredient, Recipe, Tag
 from api.models import Subscribe
 
 
@@ -14,7 +16,16 @@ class RecipeAdmin(admin.ModelAdmin):
     inlines = (IngredientInline,)
     list_display = ('name', 'author', 'description', 'pub_date')
     search_fields = ('name', 'author', 'tag')
-    list_filter = ('name',)
+    list_filter = ('name', 'author', 'tag')
+    empty_value_display = '-пусто-'
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('title',)
     empty_value_display = '-пусто-'
 
 
