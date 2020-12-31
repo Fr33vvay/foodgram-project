@@ -92,8 +92,7 @@ def recipe_edit(request, recipe_id):
     ing = Amount.objects.filter(recipe=recipe_id)
     form = RecipeForm(request.POST or None, files=request.FILES or None,
                       instance=recipe)
-    context = {'form': form, 'recipe': recipe, 'edit': True,
-               'ingredients': ing}
+    context = {'form': form, 'recipe': recipe, 'ingredients': ing}
 
     if recipe.author == request.user:
         if request.method == 'POST':
