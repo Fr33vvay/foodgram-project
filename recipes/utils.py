@@ -1,3 +1,6 @@
+from recipes.models import Tag
+
+
 def get_ingredients(data):
     ingredient_numbers = set()
     ingredients = []
@@ -14,3 +17,12 @@ def get_ingredients(data):
             }
         )
     return ingredients
+
+
+def get_recipes_by_tags(request, recipes):
+    tags = Tag.objects.all()
+    current_tags = request.GET.getlist('filters')
+    if current_tags:
+        recipes = recipes.filter(tag__title__in=current_tags).distinct()
+    context = {'recipes': recipes, 'tags': tags}
+    return context

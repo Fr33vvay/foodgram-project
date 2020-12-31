@@ -1,7 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+
 User = get_user_model()
+
+
+class RecipeManager(models.Manager):
+    def favorites(self, user):
+        favorite_recipes_ids = list(FavoriteRecipe.objects.filter(
+            user=user).values_list('recipe_id', flat=True))
+        return self.get_queryset().filter(id__in=favorite_recipes_ids)
 
 
 class Ingredient(models.Model):
@@ -19,23 +27,12 @@ class Ingredient(models.Model):
 
 
 class Tag(models.Model):
-    TAG_CHOICES = [
-        ('breakfast', 'Завтрак'),
-        ('lunch', 'Обед'),
-        ('dinner', 'Ужин'),
-    ]
-    title = models.CharField(
-        max_length=30,
-        choices=TAG_CHOICES,
-        verbose_name='Название тега'
-    )
+    title = models.CharField(verbose_name='Имя тега', max_length=150)
+    slug = models.SlugField(unique=True)
+    color = models.CharField(verbose_name='Цвет', max_length=15, null=True)
 
     def __str__(self):
         return self.title
-
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
 
 
 class Recipe(models.Model):
@@ -50,12 +47,11 @@ class Recipe(models.Model):
                               blank=True, null=True)
     ingredient = models.ManyToManyField(Ingredient, through='Amount',
                                         related_name='amount')
-    tag = models.ManyToManyField(
-        Tag,
-        related_name='recipe_tag'
-    )
+    tag = models.ManyToManyField(Tag, related_name='recipe_tag')
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время готовки')
+
+    objects = RecipeManager()
 
     class Meta:
         ordering = ['-pub_date']
@@ -81,4 +77,8 @@ class Amount(models.Model):
         verbose_name_plural = "Количество"
 
 
-
+class FavoriteRecipe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='favorites')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='favorites')

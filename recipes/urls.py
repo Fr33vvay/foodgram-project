@@ -10,7 +10,6 @@ urlpatterns = [
          name='recipe_edit'),
     path('recipe/<int:recipe_id>/delete/', views.recipe_delete,
          name='recipe_delete'),
-    path('recipe/<tag>/', views.index_tag, name='tag_index'),
     path('subscriptions/', views.subscribe, name='subscribe'),
     path('<username>/', views.profile, name='profile'),
 ]
