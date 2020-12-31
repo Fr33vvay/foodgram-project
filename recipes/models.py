@@ -28,11 +28,14 @@ class Ingredient(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(verbose_name='Имя тега', max_length=150)
-    slug = models.SlugField(unique=True)
     color = models.CharField(verbose_name='Цвет', max_length=15, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
 
 
 class Recipe(models.Model):
