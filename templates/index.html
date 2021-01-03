@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load recipe_filters %}
 {% load static %}
-{% include "nav.html" %}
+
 {% block title %}Рецепты{% endblock title %}
+
 {% block static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock static %}
@@ -37,10 +39,14 @@
                 </div>
             </div>
             {% if user.is_authenticated %}
-            <div class="card__footer">
-                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
-                <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
-            </div>
+                <div class="card__footer">
+                    <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+                    {% if recipe|is_favorite:user %}
+                        <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>
+                    {% else %}
+                        <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
         {% endfor %}

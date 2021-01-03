@@ -139,3 +139,16 @@ def subscribe(request):
     context = {'page': page, 'paginator': paginator,
                'subscriptions': subscriptions, 'user': user}
     return render(request, 'myFollow.html', context)
+
+
+@login_required
+def favorite(request):
+    """Предоставляет список любимых рецептов пользователя"""
+    user = request.user
+    favorites_list = Recipe.objects.favorites(user=user)
+    favorites_by_tags = get_recipes_by_tags(request, favorites_list)
+    paginator = Paginator(favorites_by_tags.get('recipes'), 6)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator, **favorites_by_tags}
+    return render(request, 'favorite.html', context)

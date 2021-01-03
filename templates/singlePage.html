@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load recipe_filters %}
 {% load static %}
 
 {% block title %}{{ recipe.name }}{% endblock title %}
@@ -21,8 +22,13 @@
             <div class="single-card__header-info">
                 <h1 class="single-card__title">{{ recipe.name }}</h1>
                 <div class="single-card__favorite">
-                    <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite icon-favorite_big"></span></button>
-                    <div class="single-card__favorite-tooltip tooltip">Добавить в избранное</div>
+                    {% if recipe|is_favorite:user %}
+                        <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_big"></span></button>
+                        <div class="single-card__favorite-tooltip tooltip">Добавить в избранное</div>
+                    {% else %}
+                        <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite icon-favorite_big"></span></button>
+                        <div class="single-card__favorite-tooltip tooltip">Добавить в избранное</div>
+                    {% endif %}
                 </div>
             </div>
             <ul class="single-card__items">

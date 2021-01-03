@@ -1,5 +1,7 @@
 from django import template
 
+from recipes.models import FavoriteRecipe
+
 register = template.Library()
 
 
@@ -25,3 +27,8 @@ def get_filter_link(request, tag):
         new_request.appendlist('filters', tag.title)
 
     return new_request.urlencode()
+
+
+@register.filter
+def is_favorite(recipe, user):
+    return FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists()

@@ -3,7 +3,7 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple
 
 from api.models import Subscribe
-from recipes.models import Amount, Ingredient, Recipe, Tag
+from recipes.models import Amount, Ingredient, Recipe, Tag, FavoriteRecipe
 
 
 class IngredientInline(admin.TabularInline):
@@ -47,4 +47,12 @@ class SubscribeAdmin(admin.ModelAdmin):
     list_display = ('user', 'author',)
     search_fields = ('author',)
     list_filter = ('user', 'author',)
+    empty_value_display = '-пусто-'
+
+
+@admin.register(FavoriteRecipe)
+class FavoriteRecipeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe',)
+    search_fields = ('recipe',)
+    list_filter = ('user', 'recipe',)
     empty_value_display = '-пусто-'
