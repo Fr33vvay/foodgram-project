@@ -20,9 +20,12 @@ def get_ingredients(data):
 
 
 def get_recipes_by_tags(request, recipes):
+    filters = ''
     tags = Tag.objects.all()
     current_tags = request.GET.getlist('filters')
+    for tag in current_tags:
+        filters += '&filters=' + tag
     if current_tags:
         recipes = recipes.filter(tag__title__in=current_tags).distinct()
-    context = {'recipes': recipes, 'tags': tags}
+    context = {'recipes': recipes, 'tags': tags, 'filters': filters}
     return context
