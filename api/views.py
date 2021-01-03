@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import filters, mixins, viewsets, permissions
-from rest_framework.response import Response
 
+from api.models import Subscribe
 from api.serializers import IngredientSerializer, SubscribeSerializer
 from recipes.models import Ingredient, User
-from api.models import Subscribe
+from rest_framework import filters, mixins, permissions, viewsets
+from rest_framework.response import Response
 
 
 class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -19,7 +19,7 @@ class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
 class SubscribeViewSet(viewsets.ModelViewSet):
     queryset = Subscribe.objects.all()
     serializer_class = SubscribeSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         """Создаёт подписку на автора"""

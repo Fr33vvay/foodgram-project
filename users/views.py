@@ -1,6 +1,8 @@
+import re
+
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-import re
+
 from .forms import CreationForm
 
 

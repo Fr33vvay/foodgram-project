@@ -1,8 +1,7 @@
+from api.models import Subscribe
+from recipes.models import Ingredient
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
-from recipes.models import Ingredient
-from api.models import Subscribe
 
 
 class IngredientSerializer(serializers.ModelSerializer):

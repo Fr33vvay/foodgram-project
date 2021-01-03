@@ -1,11 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 
 from api.models import Subscribe
-from recipes.models import Recipe, User, Ingredient, Amount, Tag
-
 from recipes.forms import RecipeForm
+from recipes.models import Amount, Ingredient, Recipe, Tag, User
 from recipes.utils import get_ingredients, get_recipes_by_tags
 
 
