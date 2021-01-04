@@ -34,10 +34,12 @@ def get_filter_link(request, tag):
 
 @register.filter
 def is_favorite(recipe, user):
+    """Проверяет, что рецепт находится в 'Избранном'"""
     return FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists()
 
 
 @register.simple_tag
 def declension(count, word):
+    """Склоняет слова"""
     zero_word = morph.parse(word)[0]
     return zero_word.make_agree_with_number(count).word

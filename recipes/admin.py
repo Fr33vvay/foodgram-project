@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.db import models
 from django.forms import CheckboxSelectMultiple
 
-from api.models import Subscribe
-from recipes.models import Amount, FavoriteRecipe, Ingredient, Recipe, Tag
+from recipes.models import (Amount, FavoriteRecipe, Ingredient, Recipe, Tag,
+                            Purchase)
 
 
 class IngredientInline(admin.TabularInline):
@@ -15,7 +15,7 @@ class IngredientInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (IngredientInline,)
     list_display = ('name', 'author', 'description', 'pub_date')
-    search_fields = ('name', 'author', 'tag')
+    search_fields = ('name',)
     list_filter = ('name', 'author', 'tag')
     empty_value_display = '-пусто-'
     formfield_overrides = {
@@ -42,17 +42,17 @@ class AmountAdmin(admin.ModelAdmin):
     list_display = ('recipe', 'ingredient', 'quantity')
 
 
-@admin.register(Subscribe)
-class SubscribeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'author',)
-    search_fields = ('author',)
-    list_filter = ('user', 'author',)
-    empty_value_display = '-пусто-'
-
-
 @admin.register(FavoriteRecipe)
 class FavoriteRecipeAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe',)
-    search_fields = ('recipe',)
+    search_fields = ('recipe__name',)
+    list_filter = ('user', 'recipe',)
+    empty_value_display = '-пусто-'
+
+
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe',)
+    search_fields = ('recipe__name',)
     list_filter = ('user', 'recipe',)
     empty_value_display = '-пусто-'

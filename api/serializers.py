@@ -1,4 +1,4 @@
-from api.models import Subscribe
+from users.models import Subscribe
 from recipes.models import FavoriteRecipe, Ingredient
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError

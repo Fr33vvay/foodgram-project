@@ -2,10 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-from api.models import Subscribe
+
 from recipes.forms import RecipeForm
 from recipes.models import Amount, Ingredient, Recipe, User
 from recipes.utils import get_ingredients, get_recipes_by_tags
+from users.models import Subscribe
 
 
 def index(request):
@@ -152,3 +153,15 @@ def favorite(request):
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator, **favorites_by_tags}
     return render(request, 'favorite.html', context)
+
+
+@login_required
+def purchase(request):
+    """Показывает рецепты, отобранные для списка покупок"""
+    user = request.user
+    purchases = Recipe.objects.purchases(user=user)
+    paginator = Paginator(purchases, 10)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator, 'user': user}
+    return render(request, 'myFollow.html', context)

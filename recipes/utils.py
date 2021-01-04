@@ -2,6 +2,7 @@ from recipes.models import Tag
 
 
 def get_ingredients(data):
+    """Создает список выбранных при создании рецепта ингредиентов"""
     ingredient_numbers = set()
     ingredients = []
     for key in data:
@@ -20,6 +21,7 @@ def get_ingredients(data):
 
 
 def get_recipes_by_tags(request, recipes):
+    """Возвращает набор рецептов в зависимости от выбранных тегов"""
     filters = ''
     tags = Tag.objects.all()
     current_tags = request.GET.getlist('filters')

@@ -6,9 +6,16 @@ User = get_user_model()
 
 class RecipeManager(models.Manager):
     def favorites(self, user):
+        """Возвращает любимые рецепты пользователя"""
         favorite_recipes_ids = list(FavoriteRecipe.objects.filter(
             user=user).values_list('recipe_id', flat=True))
         return self.get_queryset().filter(id__in=favorite_recipes_ids)
+
+    def purchases(self, user):
+        """Возвращает рецепты, добавленные в список покупок"""
+        purchase_recipes_ids = list(Purchase.objects.filter(
+            user=user).values_list('recipe_id', flat=True))
+        return self.get_queryset().filter(id__in=purchase_recipes_ids)
 
 
 class Ingredient(models.Model):
@@ -89,3 +96,17 @@ class FavoriteRecipe(models.Model):
         ordering = ['-id']
         verbose_name = "Избранное"
         verbose_name_plural = "Избранное"
+
+
+class Purchase(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='purchases')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='purchases')
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = "Рецепт в списке покупок"
+        verbose_name_plural = "Рецепты в списках покупок"
+
+

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from api.models import Subscribe
+from users.models import Subscribe
 from api.serializers import (
     FavoriteRecipeSerializer,
     IngredientSerializer,
