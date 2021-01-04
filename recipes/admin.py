@@ -3,7 +3,7 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple
 
 from api.models import Subscribe
-from recipes.models import Amount, Ingredient, Recipe, Tag, FavoriteRecipe
+from recipes.models import Amount, FavoriteRecipe, Ingredient, Recipe, Tag
 
 
 class IngredientInline(admin.TabularInline):

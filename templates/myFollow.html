@@ -39,7 +39,8 @@
             {% endfor %}
             {% if subscription.author.recipes.all.count > 3 %}
                 <li class="card-user__item">
-                    <a href="{% url 'profile' subscription.author %}" class="card-user__link link">Еще {{ subscription.author.recipes.all.count|add:-3 }} рецептов...</a>
+                    <a href="{% url 'profile' subscription.author %}" class="card-user__link link">Еще {{ subscription.author.recipes.all.count|add:-3 }}
+                        {% declension subscription.author.recipes.all.count|add:-3 'рецепт' %}</a>
                 </li>
             {% endif %}
             </ul>

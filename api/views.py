@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404
 
 from api.models import Subscribe
-from api.serializers import (IngredientSerializer, SubscribeSerializer,
-                             FavoriteRecipeSerializer)
-from recipes.models import Ingredient, User, FavoriteRecipe, Recipe
+from api.serializers import (
+    FavoriteRecipeSerializer,
+    IngredientSerializer,
+    SubscribeSerializer
+)
+from recipes.models import FavoriteRecipe, Ingredient, Recipe, User
 from rest_framework import filters, mixins, permissions, viewsets
 from rest_framework.response import Response
 

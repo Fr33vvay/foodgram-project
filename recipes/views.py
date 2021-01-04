@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from api.models import Subscribe
 from recipes.forms import RecipeForm
-from recipes.models import Amount, Ingredient, Recipe, Tag, User
+from recipes.models import Amount, Ingredient, Recipe, User
 from recipes.utils import get_ingredients, get_recipes_by_tags
 
 
