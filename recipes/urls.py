@@ -12,6 +12,7 @@ urlpatterns = [
          name='recipe_delete'),
     path('recipe/favorites/', views.favorite, name='favorites'),
     path('recipe/purchases/', views.purchase, name='purchases'),
+    path('recipe/purchase_delete/<int:recipe_id>/', views.remove_from_purchases, name='delete_purchase'),
     path('subscriptions/', views.subscribe, name='subscribe'),
     path('<username>/', views.profile, name='profile'),
 ]

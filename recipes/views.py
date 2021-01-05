@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from recipes.forms import RecipeForm
-from recipes.models import Amount, Ingredient, Recipe, User
+from recipes.models import Amount, Ingredient, Recipe, User, Purchase, Tag
 from recipes.utils import get_ingredients, get_recipes_by_tags
 from users.models import Subscribe
 
@@ -28,7 +29,8 @@ def profile(request, username):
         subscription = Subscribe.objects.filter(user=user,
                                                 author=author).exists()
     recipe_list = author.recipes.order_by('-pub_date')
-    paginator = Paginator(recipe_list, 6)
+    recipes_by_tags = get_recipes_by_tags(request, recipe_list)
+    paginator = Paginator(recipes_by_tags.get('recipes'), 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {
@@ -36,7 +38,8 @@ def profile(request, username):
         'author': author,
         'subscription': subscription,
         'page': page,
-        'paginator': paginator
+        'paginator': paginator,
+        **recipes_by_tags
     }
     return render(request, 'authorRecipe.html', context)
 
@@ -163,14 +166,14 @@ def purchase(request):
     """Показывает рецепты, добавленные в список покупок"""
     user = request.user
     purchases = Recipe.objects.purchases(user=user)
-    paginator = Paginator(purchases, 10)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
     context = {
-        'page': page,
-        'paginator': paginator,
         'recipes': purchases,
-        'user': user
     }
     return render(request, 'shopList.html', context)
+
+
+def remove_from_purchases(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    Purchase.objects.filter(recipe=recipe, user=request.user).delete()
+    return redirect('purchases')
 

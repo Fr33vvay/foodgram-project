@@ -59,10 +59,7 @@ class FavoriteRecipeViewSet(viewsets.ModelViewSet):
         recipe = get_object_or_404(Recipe, pk=self.request.data.get('id'))
         serializer = FavoriteRecipeSerializer(
             data=self.request.data,
-            context={
-                'request_user': self.request.user,
-                'recipe': recipe
-            }
+            context={'request_user': self.request.user}
         )
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, recipe=recipe)
@@ -87,10 +84,7 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         recipe = get_object_or_404(Recipe, pk=self.request.data.get('id'))
         serializer = PurchaseSerializer(
             data=self.request.data,
-            context={
-                'request_user': self.request.user,
-                'recipe': recipe
-            }
+            context={'request_user': self.request.user}
         )
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, recipe=recipe)

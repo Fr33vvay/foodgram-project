@@ -27,16 +27,12 @@
                         <h3 class="recipe__title">{{ recipe.name }}</h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                     </div>
-                    <a href="#" class="shopping-list__button link">Удалить</a>
+                    <a  class="shopping-list__button link" href="{% url 'delete_purchase' recipe.id %}">Удалить</a>
                 </li>
             </ul>
         {% endfor %}
         <a href="#"><button class="button button_style_blue">Скачать список</button></a>
     </div>
-
-    {% if page.has_other_pages %}
-        {% include "paginator.html" with items=page paginator=paginator%}
-    {% endif %}
 {% endblock content %}
 
 {% block script %}
