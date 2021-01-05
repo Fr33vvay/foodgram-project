@@ -1,10 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from recipes.forms import RecipeForm
-from recipes.models import Amount, Ingredient, Recipe, User, Purchase, Tag
+from recipes.models import Amount, Ingredient, Recipe, User, Purchase
 from recipes.utils import get_ingredients, get_recipes_by_tags
 from users.models import Subscribe
 
@@ -49,12 +48,7 @@ def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     author = get_object_or_404(User, username=recipe.author)
     user = request.user
-    subscription = False
-    if user.is_authenticated:
-        subscription = Subscribe.objects.filter(user=user,
-                                                author=author).exists()
-    context = {'recipe': recipe, 'author': author, 'user': user,
-               'subscription': subscription}
+    context = {'recipe': recipe, 'author': author, 'user': user}
     template_name = (
         'singlePage.html' if request.user.is_authenticated
         else 'singlePageNotAuth.html')
@@ -166,14 +160,14 @@ def purchase(request):
     """Показывает рецепты, добавленные в список покупок"""
     user = request.user
     purchases = Recipe.objects.purchases(user=user)
-    context = {
-        'recipes': purchases,
-    }
+    context = {'recipes': purchases}
     return render(request, 'shopList.html', context)
 
 
+@login_required
 def remove_from_purchases(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     Purchase.objects.filter(recipe=recipe, user=request.user).delete()
     return redirect('purchases')
+
 

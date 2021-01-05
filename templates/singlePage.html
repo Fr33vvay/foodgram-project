@@ -54,12 +54,10 @@
                     <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span>Добавить в покупки</button></li>
                 {% endif %}
                 {% if user != author %}
-                    {% if user.is_authenticated %}
-                    {% if subscription %}
+                    {% if user|is_subscribe:author %}
                         <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe"><span class="icon-check button__icon"></span>Отписаться от автора</button></li>
                     {% else %}
                         <li class="single-card__item"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></li>
-                    {% endif %}
                     {% endif %}
                 {% endif %}
             </ul>

@@ -2,6 +2,7 @@ from django import template
 
 import pymorphy2
 from recipes.models import FavoriteRecipe, Recipe, Purchase
+from users.models import Subscribe
 
 morph = pymorphy2.MorphAnalyzer()
 
@@ -36,6 +37,12 @@ def get_filter_link(request, tag):
 def is_favorite(recipe, user):
     """Проверяет, что рецепт находится в 'Избранном'"""
     return FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists()
+
+
+@register.filter
+def is_subscribe(user, author):
+    """Проверяет, что пользователь подписан на автора'"""
+    return Subscribe.objects.filter(user=user, author=author).exists()
 
 
 @register.filter
