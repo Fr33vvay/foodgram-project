@@ -1,7 +1,7 @@
 from django import template
 
 import pymorphy2
-from recipes.models import FavoriteRecipe
+from recipes.models import FavoriteRecipe, Recipe, Purchase
 
 morph = pymorphy2.MorphAnalyzer()
 
@@ -38,8 +38,20 @@ def is_favorite(recipe, user):
     return FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists()
 
 
+@register.filter
+def in_shoplist(recipe, user):
+    """Проверяет, что рецепт находится в списке покупок"""
+    return Purchase.objects.filter(user=user, recipe=recipe).exists()
+
+
 @register.simple_tag
 def declension(count, word):
     """Склоняет слова"""
     zero_word = morph.parse(word)[0]
     return zero_word.make_agree_with_number(count).word
+
+
+@register.simple_tag
+def purchase_count(user):
+    """Счётчик покупок"""
+    return Recipe.objects.purchases(user=user).count()

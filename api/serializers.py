@@ -1,5 +1,5 @@
 from users.models import Subscribe
-from recipes.models import FavoriteRecipe, Ingredient
+from recipes.models import FavoriteRecipe, Ingredient, Purchase
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -46,9 +46,27 @@ class FavoriteRecipeSerializer(serializers.ModelSerializer):
         user = self.context.get('request_user')
         recipe = self.context.get('recipe')
         if FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists():
-            raise serializers.ValidationError('Рецепт уже отмечен')
+            raise serializers.ValidationError('Рецепт уже добавлен')
         return data
 
     class Meta:
         fields = '__all__'
         model = FavoriteRecipe
+
+
+class PurchaseSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    recipe = serializers.StringRelatedField()
+
+    def validate(self, data):
+        """Запрещает добавить рецепт в список покупок второй раз"""
+        super().validate(data)
+        user = self.context.get('request_user')
+        recipe = self.context.get('recipe')
+        if Purchase.objects.filter(user=user, recipe=recipe).exists():
+            raise serializers.ValidationError('Рецепт уже добавлен')
+        return data
+
+    class Meta:
+        fields = '__all__'
+        model = Purchase

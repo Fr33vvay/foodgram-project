@@ -48,7 +48,11 @@
                 </ul>
             </div>
             <ul class="single-card__items">
-                <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
+                {% if recipe|in_shoplist:user %}
+                    <li class="single-card__item"><button class="button button_style_blue" name="purchases"><span class="icon-plus"></span>Убрать из покупок</button></li>
+                {% else %}
+                    <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span>Добавить в покупки</button></li>
+                {% endif %}
                 {% if user != author %}
                     {% if user.is_authenticated %}
                     {% if subscription %}
