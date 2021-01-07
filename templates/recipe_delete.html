@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Рецепт удалён{% endblock title %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+{% endblock static %}
+
+{% block nav %}
+    {% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="main__header">
+    <h1 class="main__title">Рецепт удалён</h1>
+    </div>
+{% endblock content %}

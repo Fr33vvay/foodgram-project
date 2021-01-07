@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Об авторе {% endblock %}
+
+{% block static %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock static %}
+
+{% block nav %}
+    {% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <main class="main container">
+        <div class="custom-center-block">
+            <p>Для создания этого сайта я использовал:
+            <p><a href='https://www.google.com/'>ГУГЛ</a></p>
+            <p><a href='https://praktikum.yandex.ru/backend-developer/'>Курсы Яндекс.Практикума</a></p>
+            <p><a href='https://www.django-rest-framework.org/'>DRF</a></p>
+            </p>
+        </div>
+    </main>
+
+{% endblock %}
