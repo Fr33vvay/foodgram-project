@@ -13,9 +13,14 @@ class IngredientInline(admin.TabularInline):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
+    def count_favorites(self, recipe):
+        """Считает число добавлений рецепта в 'Избранное'"""
+        return recipe.favorites.count()
+
     inlines = (IngredientInline,)
-    list_display = ('name', 'author', 'description', 'pub_date')
+    list_display = ('name', 'author')
     search_fields = ('name',)
+    readonly_fields = ('count_favorites', 'pub_date')
     list_filter = ('name', 'author', 'tag')
     empty_value_display = '-пусто-'
     formfield_overrides = {

@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'users',
     'recipes',
     'api',
+    'about',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
