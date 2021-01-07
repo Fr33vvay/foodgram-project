@@ -1,7 +1,7 @@
 from django import template
 
 import pymorphy2
-from recipes.models import FavoriteRecipe, Recipe, Purchase
+from recipes.models import FavoriteRecipe, Purchase, Recipe
 from users.models import Subscribe
 
 morph = pymorphy2.MorphAnalyzer()

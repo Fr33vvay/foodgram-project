@@ -3,8 +3,8 @@ from django.urls import include, path
 from api.views import (
     FavoriteRecipeViewSet,
     IngredientListView,
-    SubscribeViewSet,
-    PurchaseViewSet
+    PurchaseViewSet,
+    SubscribeViewSet
 )
 from rest_framework.routers import DefaultRouter
 
