@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from recipes.forms import RecipeForm
 from recipes.models import Amount, Ingredient, Recipe, User, Purchase
-from recipes.utils import get_ingredients, get_recipes_by_tags
+from recipes.utils import get_ingredients, get_recipes_by_tags, shopping_list
 from users.models import Subscribe
 
 
@@ -171,3 +173,13 @@ def remove_from_purchases(request, recipe_id):
     return redirect('purchases')
 
 
+def download_list(request):
+    sh_list = shopping_list(request)
+    ingredient_txt = []
+    for product, quantity in sh_list.items():
+        for key, value in quantity.items():
+            ingredient_txt += [f'{product.capitalize()} - {value} {key}\n']
+    filename = 'ingredients.txt'
+    response = HttpResponse(ingredient_txt, content_type='text/plain')
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+    return response
