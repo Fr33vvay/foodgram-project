@@ -7,7 +7,10 @@ SECRET_KEY = 'f5$(-_$4orbz2*mu$cd7cldvi^qwk1+kevhw536f-qadc5ns%n'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
 INSTALLED_APPS = [
     'users',

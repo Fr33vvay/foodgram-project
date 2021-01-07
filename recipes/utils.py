@@ -1,6 +1,4 @@
-from django.shortcuts import get_object_or_404
-
-from recipes.models import Tag, User
+from recipes.models import Tag
 
 
 def get_ingredients(data):
@@ -43,13 +41,11 @@ def shopping_list(request):
         for obj in item.recipe.recipe_amount.all():
             title = obj.ingredient.title
             dimension = obj.ingredient.dimension
-            amount = {}
             if title in ingredients:
                 ingredients[title][dimension] += obj.quantity
-                continue
             else:
-                amount[dimension] = obj.quantity
-            ingredients[title] = amount.copy()
+                ingredients[title] = {dimension: 0}
+                ingredients[title][dimension] += obj.quantity
     return ingredients
 
 

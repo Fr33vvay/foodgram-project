@@ -1,6 +1,6 @@
 from django.db import models
 
-from recipes.models import User, Recipe
+from recipes.models import User
 
 
 class Subscribe(models.Model):
