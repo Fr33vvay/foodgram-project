@@ -1,16 +1,18 @@
 import os
+from dotenv import load_dotenv
+
+
 from pathlib import Path
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'f5$(-_$4orbz2*mu$cd7cldvi^qwk1+kevhw536f-qadc5ns%n'
+SECRET_KEY = os.getenv('SEC_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'users',
