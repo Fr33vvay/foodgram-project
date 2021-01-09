@@ -46,10 +46,7 @@ def recipe_view(request, recipe_id):
     author = get_object_or_404(User, username=recipe.author)
     user = request.user
     context = {'recipe': recipe, 'author': author, 'user': user}
-    template_name = (
-        'singlePage.html' if request.user.is_authenticated
-        else 'singlePageNotAuth.html')
-    return render(request, template_name, context)
+    return render(request, 'singlePage.html', context)
 
 
 @login_required
