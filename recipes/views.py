@@ -5,9 +5,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from foodgram.settings import ITEMS
 from recipes.forms import RecipeForm
-from recipes.models import Amount, Ingredient, Purchase, Recipe, User, \
-    Subscribe
-from recipes.utils import (get_ingredients, get_recipes_by_tags, shopping_list, recipe_form_save)
+from recipes.models import Amount, Purchase, Recipe, Subscribe, User
+from recipes.utils import (
+    get_ingredients,
+    get_recipes_by_tags,
+    recipe_form_save,
+    shopping_list
+)
 
 
 def index(request):

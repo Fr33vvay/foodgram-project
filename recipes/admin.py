@@ -8,8 +8,8 @@ from recipes.models import (
     Ingredient,
     Purchase,
     Recipe,
-    Tag,
-    Subscribe
+    Subscribe,
+    Tag
 )
 
 

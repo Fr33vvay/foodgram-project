@@ -1,4 +1,4 @@
-from recipes.models import Tag, Amount, Ingredient
+from recipes.models import Amount, Ingredient, Tag
 
 
 def get_ingredients(data):

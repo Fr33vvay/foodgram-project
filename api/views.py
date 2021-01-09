@@ -6,8 +6,14 @@ from api.serializers import (
     PurchaseSerializer,
     SubscribeSerializer
 )
-from recipes.models import FavoriteRecipe, Ingredient, Purchase, Recipe, User, \
-    Subscribe
+from recipes.models import (
+    FavoriteRecipe,
+    Ingredient,
+    Purchase,
+    Recipe,
+    Subscribe,
+    User
+)
 from rest_framework import filters, mixins, permissions, viewsets
 from rest_framework.response import Response
 
