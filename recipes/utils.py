@@ -47,5 +47,3 @@ def shopping_list(request):
                 ingredients[title] = {dimension: 0}
                 ingredients[title][dimension] += obj.quantity
     return ingredients
-
-

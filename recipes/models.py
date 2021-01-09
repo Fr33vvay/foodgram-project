@@ -108,5 +108,3 @@ class Purchase(models.Model):
         ordering = ['-id']
         verbose_name = "Рецепт в списке покупок"
         verbose_name_plural = "Рецепты в списках покупок"
-
-

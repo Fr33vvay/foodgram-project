@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
+from foodgram.settings import ITEMS
 from recipes.forms import RecipeForm
 from recipes.models import Amount, Ingredient, Purchase, Recipe, User
 from recipes.utils import get_ingredients, get_recipes_by_tags, shopping_list
@@ -13,7 +14,7 @@ def index(request):
     """Предоставляет список рецептов для всех пользователей"""
     recipe_list = Recipe.objects.all()
     recipes_by_tags = get_recipes_by_tags(request, recipe_list)
-    paginator = Paginator(recipes_by_tags.get('recipes'), 6)
+    paginator = Paginator(recipes_by_tags.get('recipes'), ITEMS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator, **recipes_by_tags}
@@ -24,19 +25,14 @@ def profile(request, username):
     """Показывает страницу автора рецепта"""
     user = request.user
     author = get_object_or_404(User, username=username)
-    subscription = False
-    if user.is_authenticated:
-        subscription = Subscribe.objects.filter(user=user,
-                                                author=author).exists()
     recipe_list = author.recipes.order_by('-pub_date')
     recipes_by_tags = get_recipes_by_tags(request, recipe_list)
-    paginator = Paginator(recipes_by_tags.get('recipes'), 6)
+    paginator = Paginator(recipes_by_tags.get('recipes'), ITEMS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {
         'user': user,
         'author': author,
-        'subscription': subscription,
         'page': page,
         'paginator': paginator,
         **recipes_by_tags
@@ -131,7 +127,7 @@ def subscribe(request):
     """Предоставляет список подписок пользователя"""
     user = request.user
     subscriptions = Subscribe.objects.filter(user=user)
-    paginator = Paginator(subscriptions, 6)
+    paginator = Paginator(subscriptions, ITEMS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {
@@ -149,7 +145,7 @@ def favorite(request):
     user = request.user
     favorites_list = Recipe.objects.favorites(user=user)
     favorites_by_tags = get_recipes_by_tags(request, favorites_list)
-    paginator = Paginator(favorites_by_tags.get('recipes'), 6)
+    paginator = Paginator(favorites_by_tags.get('recipes'), ITEMS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator, **favorites_by_tags}

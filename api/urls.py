@@ -9,6 +9,7 @@ from api.views import (
 from rest_framework.routers import DefaultRouter
 
 router_v1 = DefaultRouter()
+
 router_v1.register('ingredients', IngredientListView)
 router_v1.register('subscriptions', SubscribeViewSet)
 router_v1.register('favorites', FavoriteRecipeViewSet)
