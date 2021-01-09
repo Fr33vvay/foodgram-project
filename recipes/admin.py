@@ -8,7 +8,8 @@ from recipes.models import (
     Ingredient,
     Purchase,
     Recipe,
-    Tag
+    Tag,
+    Subscribe
 )
 
 
@@ -66,4 +67,12 @@ class PurchaseAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe',)
     search_fields = ('recipe__name',)
     list_filter = ('user', 'recipe',)
+    empty_value_display = '-пусто-'
+
+
+@admin.register(Subscribe)
+class SubscribeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'author',)
+    search_fields = ('author__username',)
+    list_filter = ('user', 'author',)
     empty_value_display = '-пусто-'

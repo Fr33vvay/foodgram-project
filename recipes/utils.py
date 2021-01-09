@@ -1,4 +1,4 @@
-from recipes.models import Tag
+from recipes.models import Tag, Amount, Ingredient
 
 
 def get_ingredients(data):
@@ -47,3 +47,17 @@ def shopping_list(request):
                 ingredients[title] = {dimension: 0}
                 ingredients[title][dimension] += obj.quantity
     return ingredients
+
+
+def recipe_form_save(form, ingredients, request):
+    recipe = form.save(commit=False)
+    recipe.author = request.user
+    recipe.save()
+    for item in ingredients:
+        recipe_ing = Amount(
+            quantity=item.get('quantity'),
+            ingredient=Ingredient.objects.get(
+                title=item.get('title')),
+            recipe=recipe)
+        recipe_ing.save()
+    form.save_m2m()

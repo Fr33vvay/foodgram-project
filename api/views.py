@@ -6,10 +6,10 @@ from api.serializers import (
     PurchaseSerializer,
     SubscribeSerializer
 )
-from recipes.models import FavoriteRecipe, Ingredient, Purchase, Recipe, User
+from recipes.models import FavoriteRecipe, Ingredient, Purchase, Recipe, User, \
+    Subscribe
 from rest_framework import filters, mixins, permissions, viewsets
 from rest_framework.response import Response
-from users.models import Subscribe
 
 
 class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):

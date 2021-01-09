@@ -108,3 +108,17 @@ class Purchase(models.Model):
         ordering = ['-id']
         verbose_name = "Рецепт в списке покупок"
         verbose_name_plural = "Рецепты в списках покупок"
+
+
+class Subscribe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             verbose_name='Подписчик',
+                             related_name='subscribers')
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               verbose_name='Автор',
+                               related_name='subscriptions')
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"

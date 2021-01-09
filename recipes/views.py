@@ -5,9 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from foodgram.settings import ITEMS
 from recipes.forms import RecipeForm
-from recipes.models import Amount, Ingredient, Purchase, Recipe, User
-from recipes.utils import get_ingredients, get_recipes_by_tags, shopping_list
-from users.models import Subscribe
+from recipes.models import Amount, Ingredient, Purchase, Recipe, User, \
+    Subscribe
+from recipes.utils import (get_ingredients, get_recipes_by_tags, shopping_list, recipe_form_save)
 
 
 def index(request):
@@ -59,16 +59,7 @@ def new_recipe(request):
             form.add_error(None, 'Добавьте ингредиенты')
 
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.author = request.user
-            recipe.save()
-            for item in ingredients:
-                recipe_ing = Amount(
-                    quantity=item.get('quantity'),
-                    ingredient=Ingredient.objects.get(title=item.get('title')),
-                    recipe=recipe)
-                recipe_ing.save()
-            form.save_m2m()
+            recipe_form_save(form, ingredients, request)
             return redirect('index')
 
     form = RecipeForm()
@@ -90,17 +81,7 @@ def recipe_edit(request, recipe_id):
 
             if form.is_valid():
                 ing.delete()
-                recipe = form.save(commit=False)
-                recipe.author = request.user
-                recipe.save()
-                for item in ingredients:
-                    recipe_ing = Amount(
-                        quantity=item.get('quantity'),
-                        ingredient=Ingredient.objects.get(
-                            title=item.get('title')),
-                        recipe=recipe)
-                    recipe_ing.save()
-                form.save_m2m()
+                recipe_form_save(form, ingredients, request)
                 return redirect('recipe_view', recipe_id)
 
         return render(request, 'formChangeRecipe.html', context)
