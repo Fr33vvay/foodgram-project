@@ -98,9 +98,8 @@ def recipe_delete(request, recipe_id):
     """Удаляет рецепт"""
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if recipe.author == request.user:
-        if request.method == 'GET':
-            recipe.delete()
-            return render(request, 'recipe_delete.html')
+        recipe.delete()
+        return render(request, 'recipe_delete.html')
     return redirect('recipe_view', recipe_id)
 
 
