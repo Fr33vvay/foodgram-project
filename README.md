@@ -1,6 +1,6 @@
 ### Статус workflow
 
-![foodgram_workflow](https://github.com/Fr33vvay/foodgram-project/workflows/food/badge.svg)
+![foodgram_workflow](https://github.com/Fr33vvay/foodgram-project/workflows/foodgram_workflow/badge.svg)
 
 # Foodgram. Рецепты с фоточками
 
