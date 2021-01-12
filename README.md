@@ -2,6 +2,7 @@
 
 ![foodgram_workflow](https://github.com/Fr33vvay/foodgram-project/workflows/foodgram_workflow/badge.svg)
 
+### [Пример сайта](http://freeway-foodgram.tk/recipe/)
 # Foodgram. Рецепты с фоточками
 
 Сайт рецептов. Пользователи могут публиковать свои рецепты, просматривать и 
