@@ -47,7 +47,7 @@ python manage.py load_ingredients_data
 python manage.py createsuperuser
 ```
 
-Для проверки работы откройте в своем браузере [localhost/recipe](http://localhost/recipe)
+Для проверки работы откройте в своем браузере: [localhost/recipe](http://localhost/recipe)
 
 Если вы хотите локально вносить изменения в проект, то в файле
 docker-compose.yaml закомментируйте строку image: fr33vvay/foodgram:latest
