@@ -57,7 +57,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          source: 'docker-compose.yaml, nginx/nginx.conf'
+          source: 'docker-compose.yaml, nginx/nginx.conf, .env'
           target: '/home/freeway/foodgram'
 
       - name: executing remote ssh commands to deploy
