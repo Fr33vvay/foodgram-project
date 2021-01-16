@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, forms
 
 from recipes.models import Recipe, Ingredient
@@ -15,18 +16,22 @@ class RecipeForm(ModelForm):
             'image',
         )
 
-    # def clean_ingredient(self):
-    #     """Валидатор для ингридиентов"""
-    #     ingredient_names = self.data.getlist('nameIngredient')
-    #     ingredient_dimension = self.data.getlist('unitsIngredient')
-    #     ingredient_quantity = self.data.getlist('valueIngredient')
-    #     ingredients_clean = []
-    #     for ingredient in zip(ingredient_names, ingredient_dimension,
-    #                           ingredient_quantity):
-    #         if Ingredient.objects.filter(title=ingredient[0]).exists():
-    #             ingredients_clean.append({'title': ingredient[0],
-    #                                       'dimension': ingredient[1],
-    #                                       'quantity': ingredient[2]})
-    #     if len(ingredients_clean) == 0:
-    #         raise forms.ValidationError('Добавте ингридиент')
-    #     return ingredients_clean
+    def clean(self):
+        known_ids = []
+        for items in self.data.keys():
+            if 'nameIngredient' in items:
+                name, id = items.split('_')
+                known_ids.append(id)
+
+        for id in known_ids:
+            title = self.data.get(f'nameIngredient_{id}')
+            value = self.data.get(f'valueIngredient_{id}')
+
+            if int(value) <= 0:
+                raise ValidationError('Ингредиентов должно быть больше 0')
+
+            is_exists = Ingredient.objects.filter(
+                title=title).exists()
+
+            if not is_exists:
+                raise ValidationError('Выберите ингредиент из списка')
