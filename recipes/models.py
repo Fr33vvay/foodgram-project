@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
 
+
 User = get_user_model()
 
 
@@ -53,8 +54,7 @@ class Recipe(models.Model):
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True,
                                     db_index=True)
     description = models.TextField(verbose_name='Описание')
-    image = models.ImageField(verbose_name='Картинка', upload_to='recipes/',
-                              blank=True, null=True)
+    image = models.ImageField(verbose_name='Картинка', upload_to='recipes/')
     ingredient = models.ManyToManyField(Ingredient, through='Amount',
                                         related_name='amount')
     tag = models.ManyToManyField(Tag, related_name='recipe_tag')
