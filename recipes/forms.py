@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
-from recipes.models import Ingredient, Recipe
+from recipes.models import Recipe
 
 
 class RecipeForm(ModelForm):
