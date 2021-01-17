@@ -14,8 +14,8 @@ services:
     env_file:
       - ./.env
   web:
-#    image: fr33vvay/foodgram:latest
-    build: .
+    image: fr33vvay/foodgram:latest
+#    build: .
     container_name: django
     restart: always
     volumes:
