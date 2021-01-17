@@ -5,7 +5,6 @@ from recipes.models import Ingredient, Recipe
 
 
 class RecipeForm(ModelForm):
-
     class Meta:
         model = Recipe
         fields = (
@@ -33,4 +32,5 @@ class RecipeForm(ModelForm):
             is_exists = Ingredient.objects.filter(title=title).exists()
 
             if not is_exists:
-                raise ValidationError('Выберите ингредиент из списка')
+                raise ValidationError(
+                    'Выберите ингредиент из выпадающего списка')

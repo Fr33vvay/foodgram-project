@@ -80,11 +80,15 @@
 
                     </div>
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
-                    {% if form.errors %}
-                        {% for error in form.errors %}
-                            <span class="form__error">Выберите из выпадающего списка хотя бы 1 ингредиент. Кол-во должно быть больше 0.</span>
-                        {% endfor %}
-                    {% endif %}
+                    <span class="form__error">
+                        {% if form.non_field_errors %}
+                            <div class="non-field-errors">
+                                {% for error in form.non_field_errors %}
+                                <p class="form-error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </span>
                 </div>
             </div>
             <div class="form__group">
