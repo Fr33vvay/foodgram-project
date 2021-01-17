@@ -80,7 +80,7 @@
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
                     {% if form.errors %}
                         {% for error in field.errors %}
-                            <span class="form__error">Выберите ингредиент из выпадающего списка</span>
+                            <span class="form__error">{{ error|escape }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>

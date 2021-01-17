@@ -56,8 +56,8 @@ def recipe_view(request, recipe_id):
 @login_required
 def new_recipe(request):
     """Создаёт новый рецепт"""
-    form = RecipeForm(request.POST or None, files=request.FILES or None)
     if request.method == 'POST':
+        form = RecipeForm(request.POST or None, files=request.FILES or None)
         ingredients = get_ingredients(request.POST)
         if not ingredients:
             form.add_error(None, 'Добавьте ингредиенты')
@@ -66,7 +66,7 @@ def new_recipe(request):
             return redirect('index')
         else:
             return render(request, 'formRecipe.html', {'form': form})
-    return render(request, 'formRecipe.html', {'form': form})
+    return render(request, 'formRecipe.html', {'form': RecipeForm()})
 
 
 @login_required

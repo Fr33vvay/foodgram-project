@@ -56,8 +56,7 @@ def recipe_form_save(form, ingredients, request):
     for item in ingredients:
         recipe_ing = Amount(
             quantity=item.get('quantity'),
-            ingredient=Ingredient.objects.get(
-                title=item.get('title')),
+            ingredient=Ingredient.objects.get(title=item.get('title')),
             recipe=recipe)
         recipe_ing.save()
     form.save_m2m()

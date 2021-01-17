@@ -30,8 +30,7 @@ class RecipeForm(ModelForm):
             if int(value) <= 0:
                 raise ValidationError('Ингредиентов должно быть больше 0')
 
-            is_exists = Ingredient.objects.filter(
-                title=title).exists()
+            is_exists = Ingredient.objects.filter(title=title).exists()
 
             if not is_exists:
                 raise ValidationError('Выберите ингредиент из списка')
