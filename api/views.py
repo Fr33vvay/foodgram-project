@@ -79,3 +79,9 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, recipe=recipe)
         return Response({'success': True})
+
+    def destroy(self, request, *args, **kwargs):
+        """Удаляет рецепт из списка покупок"""
+        Purchase.objects.filter(recipe__id=kwargs['pk'],
+                                user=request.user).delete()
+        return Response({'success': True})
