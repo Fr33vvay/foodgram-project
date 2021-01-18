@@ -52,7 +52,7 @@
         {% if user.is_authenticated %}
             <ul class="single-card__items">
                 {% if recipe|in_shoplist:user %}
-                    <li class="single-card__item"><button class="button button_style_blue" name="purchases"><span class="icon-plus"></span>Убрать из покупок</button></li>
+                    <li class="single-card__item"><button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span> Рецепт добавлен</button></li>
                 {% else %}
                     <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span>Добавить в покупки</button></li>
                 {% endif %}
