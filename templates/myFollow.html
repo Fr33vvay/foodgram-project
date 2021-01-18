@@ -29,9 +29,9 @@
                 <li class="card-user__item">
                     <div class="recipe">
                         {% thumbnail recipe.image "100x100" crop="center" as im %}
-                        <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="Картинка" class="recipe__image"></a>
+                        <img src="{{ im.url }}" alt="Картинка" class="recipe__image">
                         {% endthumbnail %}
-                        <h3 class="recipe__title">{{ recipe.name }}</h3>
+                        <h3 class="recipe__title"><a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank">{{ recipe.name }}</a></h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                     </div>
                 </li>

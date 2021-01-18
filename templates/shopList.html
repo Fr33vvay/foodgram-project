@@ -17,20 +17,21 @@
     </div>
     <div class="card-list card-list_column">
         {% load thumbnail %}
-        {% for recipe in recipes %}
-            <ul class="shopping-list">
+        <ul class="shopping-list">
+            {% for recipe in recipes %}
                 <li class="shopping-list__item" data-id="{{ recipe.id }}">
                     <div class="recipe recipe_reverse">
                         {% thumbnail recipe.image "100x100" crop="center" as im %}
-                        <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="Картинка" class="recipe__image recipe__image_big">
+                        <img src="{{ im.url }}" alt="Картинка" class="recipe__image recipe__image_big">
                         {% endthumbnail %}
-                        <h3 class="recipe__title">{{ recipe.name }}</h3>
+                        <h3 class="recipe__title"><a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank">{{ recipe.name }}</a></h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                     </div>
                     <a  class="shopping-list__button link" href="{% url 'delete_purchase' recipe.id %}">Удалить</a>
                 </li>
-            </ul>
-        {% endfor %}
+            {% endfor %}
+        </ul>
+
         <a href="{% url 'download' %}"><button class="button button_style_blue">Скачать список</button></a>
     </div>
 {% endblock content %}
