@@ -21,6 +21,7 @@ def get_tag_filter(value):
 @register.filter
 def get_filter_link(request, tag):
     new_request = request.GET.copy()
+    page = new_request.get('page', None)
 
     if tag.title in request.GET.getlist('filters'):
         tags = new_request.getlist('filters')
@@ -28,6 +29,8 @@ def get_filter_link(request, tag):
         new_request.setlist('filters', tags)
     else:
         new_request.appendlist('filters', tag.title)
+    if page:
+        new_request.pop('page')
 
     return new_request.urlencode()
 
